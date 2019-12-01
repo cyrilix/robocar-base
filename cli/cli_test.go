@@ -28,3 +28,37 @@ func TestSetDefaultValueFromEnv(t *testing.T) {
 		}
 	}
 }
+
+func TestSetIntDefaultValueFromEnv(t *testing.T) {
+	err := os.Setenv("KEY1", "12")
+	err = os.Setenv("BAD_VALUE", "bad value")
+	if err != nil {
+		t.Errorf("unable to set env value: %v", err)
+	}
+
+	cases := []struct{
+		key string
+		defValue int
+		expected int
+		withError bool
+	}{
+		{"MISSING_KEY", 3, 3, false},
+		{"KEY1", 5, 12, false},
+		{"BAD_VALUE", 5, 0, true},
+	}
+
+	for _, c := range cases {
+		var value = 0
+		err := SetIntDefaultValueFromEnv(&value, c.key, c.defValue)
+		if err != nil {
+			if !c.withError{
+				t.Errorf("SetIntDefaultValueFromEnv(*value, %v, %v): %v", c.key, c.defValue, err)
+			}
+		}
+		if c.withError && err == nil{
+			t.Errorf("SetIntDefaultValueFromEnv(*value, %v, %v): %v, wants an error", c.key, c.defValue, value)
+		} else if c.expected != value {
+			t.Errorf("SetDefaultValueFromEnv(*value, %v, %v): %v, wants %v", c.key, c.defValue, value, c.expected)
+		}
+	}
+}
