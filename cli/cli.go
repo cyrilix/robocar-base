@@ -18,7 +18,7 @@ func SetIntDefaultValueFromEnv(value *int, key string, defaultValue int) error {
 	if os.Getenv(key) != "" {
 		sVal = os.Getenv(key)
 		val, err := strconv.Atoi(sVal)
-		if err != nil{
+		if err != nil {
 			log.Printf("unable to convert string to int: %v", err)
 			return err
 		}

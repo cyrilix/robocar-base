@@ -39,8 +39,8 @@ func MqttContainer(t *testing.T) (context.Context, testcontainers.Container, str
 	return ctx, mqttC, mqttUri
 }
 
-func NewFakePublisher() *FakePublisher{
-	return &FakePublisher{msg:make(map[string]mqttdevice.MqttValue)}
+func NewFakePublisher() *FakePublisher {
+	return &FakePublisher{msg: make(map[string]mqttdevice.MqttValue)}
 }
 
 type FakePublisher struct {
@@ -103,4 +103,3 @@ func NewFakeMessage(topic string, payload []byte) mqtt.Message {
 		acked:   false,
 	}
 }
-

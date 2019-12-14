@@ -11,8 +11,8 @@ func TestSetDefaultValueFromEnv(t *testing.T) {
 		t.Errorf("unable to set env value: %v", err)
 	}
 
-	cases := []struct{
-		key string
+	cases := []struct {
+		key      string
 		defValue string
 		expected string
 	}{
@@ -36,10 +36,10 @@ func TestSetIntDefaultValueFromEnv(t *testing.T) {
 		t.Errorf("unable to set env value: %v", err)
 	}
 
-	cases := []struct{
-		key string
-		defValue int
-		expected int
+	cases := []struct {
+		key       string
+		defValue  int
+		expected  int
 		withError bool
 	}{
 		{"MISSING_KEY", 3, 3, false},
@@ -51,11 +51,11 @@ func TestSetIntDefaultValueFromEnv(t *testing.T) {
 		var value = 0
 		err := SetIntDefaultValueFromEnv(&value, c.key, c.defValue)
 		if err != nil {
-			if !c.withError{
+			if !c.withError {
 				t.Errorf("SetIntDefaultValueFromEnv(*value, %v, %v): %v", c.key, c.defValue, err)
 			}
 		}
-		if c.withError && err == nil{
+		if c.withError && err == nil {
 			t.Errorf("SetIntDefaultValueFromEnv(*value, %v, %v): %v, wants an error", c.key, c.defValue, value)
 		} else if c.expected != value {
 			t.Errorf("SetDefaultValueFromEnv(*value, %v, %v): %v, wants %v", c.key, c.defValue, value, c.expected)

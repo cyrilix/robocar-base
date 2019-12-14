@@ -103,12 +103,12 @@ func TestMqttValue_ByteSliceValue(t *testing.T) {
 	}{
 		{NewMqttValue([]byte("content")), []byte("content")},
 	}
-	for _, c := range cases{
+	for _, c := range cases {
 		val, err := c.value.ByteSliceValue()
 		if err != nil {
 			t.Errorf("unexpected conversion error: %v", err)
 		}
-		if string(c.expected) != string(val){
+		if string(c.expected) != string(val) {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
 		}
 	}
@@ -122,12 +122,12 @@ func TestMqttValue_Float32Value(t *testing.T) {
 		{NewMqttValue("32.0123"), float32(32.0123)},
 		{NewMqttValue("33"), float32(33.)},
 	}
-	for _, c := range cases{
+	for _, c := range cases {
 		val, err := c.value.Float32Value()
 		if err != nil {
 			t.Errorf("unexpected conversion error: %v", err)
 		}
-		if c.expected != val{
+		if c.expected != val {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
 		}
 	}
@@ -141,12 +141,12 @@ func TestMqttValue_Float64Value(t *testing.T) {
 		{NewMqttValue("32.0123"), 32.0123},
 		{NewMqttValue("33"), 33.},
 	}
-	for _, c := range cases{
+	for _, c := range cases {
 		val, err := c.value.Float64Value()
 		if err != nil {
 			t.Errorf("unexpected conversion error: %v", err)
 		}
-		if c.expected != val{
+		if c.expected != val {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
 		}
 	}
@@ -159,12 +159,12 @@ func TestMqttValue_IntValue(t *testing.T) {
 		{NewMqttValue("1"), 1},
 		{NewMqttValue("-10"), -10},
 	}
-	for _, c := range cases{
+	for _, c := range cases {
 		val, err := c.value.IntValue()
 		if err != nil {
 			t.Errorf("unexpected conversion error: %v", err)
 		}
-		if c.expected != val{
+		if c.expected != val {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
 		}
 	}
@@ -177,12 +177,12 @@ func TestMqttValue_StringValue(t *testing.T) {
 		{NewMqttValue("ON"), "ON"},
 		{NewMqttValue("OFF"), "OFF"},
 	}
-	for _, c := range cases{
+	for _, c := range cases {
 		val, err := c.value.StringValue()
 		if err != nil {
 			t.Errorf("unexpected conversion error: %v", err)
 		}
-		if c.expected != val{
+		if c.expected != val {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
 		}
 	}
