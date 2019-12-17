@@ -3,7 +3,9 @@ package cli
 import (
 	"log"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 )
 
 func SetDefaultValueFromEnv(value *string, key string, defaultValue string) {
@@ -27,4 +29,20 @@ func SetIntDefaultValueFromEnv(value *int, key string, defaultValue int) error {
 		*value = defaultValue
 	}
 	return nil
+}
+
+type Part interface {
+	Start() error
+	Stop()
+}
+
+func HandleExit(p Part) {
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Kill, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		<-signals
+		p.Stop()
+		os.Exit(0)
+	}()
 }
