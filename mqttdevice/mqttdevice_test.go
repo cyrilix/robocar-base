@@ -1,14 +1,15 @@
 package mqttdevice
 
 import (
-	"github.com/cyrilix/robocar-base/testtools"
+	"github.com/cyrilix/robocar-base/mode"
+	"github.com/cyrilix/robocar-base/testtools/docker"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"testing"
 )
 
 func TestIntegration(t *testing.T) {
 
-	ctx, mqttC, mqttUri := testtools.MqttContainer(t)
+	ctx, mqttC, mqttUri := docker.MqttContainer(t)
 	defer mqttC.Terminate(ctx)
 
 	t.Run("ConnectAndClose", func(t *testing.T) {
@@ -184,6 +185,26 @@ func TestMqttValue_StringValue(t *testing.T) {
 		}
 		if c.expected != val {
 			t.Errorf("MqttValue.BoolValue(): %v, wants %v", val, c.expected)
+		}
+	}
+}
+
+func TestMqttValue_DriveModeValue(t *testing.T) {
+	cases := []struct {
+		value    MqttValue
+		expected mode.DriveMode
+	}{
+		{NewMqttValue(mode.DriveModeUser), mode.DriveModeUser},
+		{NewMqttValue(mode.DriveModePilot), mode.DriveModePilot},
+		{NewMqttValue(mode.DriveModeInvalid), mode.DriveModeInvalid},
+	}
+	for _, c := range cases {
+		val, err := c.value.DriveModeValue()
+		if err != nil {
+			t.Errorf("unexpected conversion error: %v", err)
+		}
+		if c.expected != val {
+			t.Errorf("MqttValue.DriveMode(): %v, wants %v", val, c.expected)
 		}
 	}
 }
