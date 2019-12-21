@@ -2,7 +2,7 @@ package mqttdevice
 
 import (
 	"fmt"
-	"github.com/cyrilix/robocar-base/mode"
+	"github.com/cyrilix/robocar-base/types"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"io"
 	"log"
@@ -128,12 +128,12 @@ func (m *MqttValue) Float64Value() (float64, error) {
 func (m *MqttValue) StringValue() (string, error) {
 	return string(*m), nil
 }
-func (m *MqttValue) DriveModeValue() (mode.DriveMode, error) {
+func (m *MqttValue) DriveModeValue() (types.DriveMode, error) {
 	val, err := m.IntValue()
 	if err != nil {
-		return mode.DriveModeInvalid, err
+		return types.DriveModeInvalid, err
 	}
-	return mode.DriveMode(val), nil
+	return types.DriveMode(val), nil
 }
 func (m *MqttValue) ByteSliceValue() ([]byte, error) {
 	return *m, nil

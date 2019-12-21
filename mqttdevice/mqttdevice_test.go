@@ -1,7 +1,7 @@
 package mqttdevice
 
 import (
-	"github.com/cyrilix/robocar-base/mode"
+	"github.com/cyrilix/robocar-base/types"
 	"github.com/cyrilix/robocar-base/testtools/docker"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"testing"
@@ -192,11 +192,11 @@ func TestMqttValue_StringValue(t *testing.T) {
 func TestMqttValue_DriveModeValue(t *testing.T) {
 	cases := []struct {
 		value    MqttValue
-		expected mode.DriveMode
+		expected types.DriveMode
 	}{
-		{NewMqttValue(mode.DriveModeUser), mode.DriveModeUser},
-		{NewMqttValue(mode.DriveModePilot), mode.DriveModePilot},
-		{NewMqttValue(mode.DriveModeInvalid), mode.DriveModeInvalid},
+		{NewMqttValue(types.DriveModeUser), types.DriveModeUser},
+		{NewMqttValue(types.DriveModePilot), types.DriveModePilot},
+		{NewMqttValue(types.DriveModeInvalid), types.DriveModeInvalid},
 	}
 	for _, c := range cases {
 		val, err := c.value.DriveModeValue()
