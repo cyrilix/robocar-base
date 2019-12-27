@@ -66,14 +66,14 @@ func TestNewMqttValue(t *testing.T) {
 		{[]byte("test bytes"), []byte("test bytes")},
 
 		{struct {
-			content string
-		}{"invalid"}, nil},
+			Content string
+		}{"other"}, []byte(`{"Content":"other"}`)},
 	}
 
 	for _, c := range cases {
 		val := NewMqttValue(c.value)
 		if string(val) != string(c.expected) {
-			t.Errorf("NewMqttValue(%v): %v, wants %v", c.value, val, c.expected)
+			t.Errorf("NewMqttValue(%v): %v, wants %v", c.value, string(val), string(c.expected))
 		}
 	}
 }

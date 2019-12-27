@@ -1,6 +1,7 @@
 package mqttdevice
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/cyrilix/robocar-base/types"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
@@ -107,8 +108,12 @@ func NewMqttValue(v interface{}) MqttValue {
 	case MqttValue:
 		return val
 	default:
-		log.Printf("invalid mqtt value: %v", val)
-		return nil
+		jsonValue, err := json.Marshal(v)
+		if err != nil {
+			log.Printf("unable to mashall to json value '%v': %v", v, err)
+			return nil
+		}
+		return jsonValue
 	}
 }
 
