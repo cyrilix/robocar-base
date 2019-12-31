@@ -1,23 +1,29 @@
 package mqttdevice
 
 import (
-	"github.com/cyrilix/robocar-base/types"
 	"github.com/cyrilix/robocar-base/testtools/docker"
+	"github.com/cyrilix/robocar-base/types"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	log "github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestIntegration(t *testing.T) {
 
 	ctx, mqttC, mqttUri := docker.MqttContainer(t)
-	defer mqttC.Terminate(ctx)
+	defer func(){
+		err := mqttC.Terminate(ctx)
+		log.Errorf("unable to terminate container: %v", err)
+	}()
 
 	t.Run("ConnectAndClose", func(t *testing.T) {
 		t.Logf("Mqtt connection %s ready", mqttUri)
 
-		p := pahoMqttPubSub{Uri: mqttUri, ClientId: "TestMqtt", Username: "guest", Password: "guest"}
-		p.Connect()
-		p.Close()
+		client, err := Connect(mqttUri, "TestMqtt", "guest", "guest")
+		if err != nil {
+			t.Errorf("unable to init mqtt connection: %v", err)
+		}
+		defer client.Disconnect(10)
 	})
 	t.Run("Publish", func(t *testing.T) {
 		options := mqtt.NewClientOptions().AddBroker(mqttUri)
@@ -31,6 +37,7 @@ func TestIntegration(t *testing.T) {
 		if token.Error() != nil {
 			t.Fatalf("unable to connect to mqtt broker: %v\n", token.Error())
 		}
+		defer client.Disconnect(10)
 
 		c := make(chan string)
 		defer close(c)
@@ -38,9 +45,7 @@ func TestIntegration(t *testing.T) {
 			c <- string(message.Payload())
 		}).Wait()
 
-		p := pahoMqttPubSub{Uri: mqttUri, ClientId: "TestMqtt", Username: "guest", Password: "guest"}
-		p.Connect()
-		defer p.Close()
+		p := pahoMqttPubSub{client: client}
 
 		p.Publish("test/publish", []byte("Test1234"))
 		result := <-c
