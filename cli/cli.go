@@ -61,7 +61,7 @@ func HandleExit(p service.Part) {
 	}()
 }
 
-func InitMqttFlags(defaultClientId string, mqttBroker, username, password, clientId *string, mqttQos *int, mqttRetain *bool) {
+func InitMqttFlagSet(flagSet *flag.FlagSet, defaultClientId string, mqttBroker, username, password, clientId *string, mqttQos *int, mqttRetain *bool) {
 	SetDefaultValueFromEnv(clientId, "MQTT_CLIENT_ID", defaultClientId)
 	SetDefaultValueFromEnv(mqttBroker, "MQTT_BROKER", "tcp://127.0.0.1:1883")
 
@@ -71,6 +71,10 @@ func InitMqttFlags(defaultClientId string, mqttBroker, username, password, clien
 	flag.StringVar(clientId, "mqtt-client-id", *clientId, "Mqtt client id, use MQTT_CLIENT_ID env if args not set")
 	flag.IntVar(mqttQos, "mqtt-qos", *mqttQos, "Qos to pusblish message, use MQTT_QOS env if arg not set")
 	flag.BoolVar(mqttRetain, "mqtt-retain", *mqttRetain, "Retain mqtt message, if not set, true if MQTT_RETAIN env variable is set")
+}
+
+func InitMqttFlags(defaultClientId string, mqttBroker, username, password, clientId *string, mqttQos *int, mqttRetain *bool) {
+	InitMqttFlagSet(flag.CommandLine, defaultClientId, mqttBroker, username, password, clientId, mqttQos, mqttRetain)
 }
 
 func InitIntFlag(key string, defValue int) int {
