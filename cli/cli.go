@@ -65,12 +65,12 @@ func InitMqttFlagSet(flagSet *flag.FlagSet, defaultClientId string, mqttBroker, 
 	SetDefaultValueFromEnv(clientId, "MQTT_CLIENT_ID", defaultClientId)
 	SetDefaultValueFromEnv(mqttBroker, "MQTT_BROKER", "tcp://127.0.0.1:1883")
 
-	flag.StringVar(mqttBroker, "mqtt-broker", *mqttBroker, "Broker Uri, use MQTT_BROKER env if arg not set")
-	flag.StringVar(username, "mqtt-username", os.Getenv("MQTT_USERNAME"), "Broker Username, use MQTT_USERNAME env if arg not set")
-	flag.StringVar(password, "mqtt-password", os.Getenv("MQTT_PASSWORD"), "Broker Password, MQTT_PASSWORD env if args not set")
-	flag.StringVar(clientId, "mqtt-client-id", *clientId, "Mqtt client id, use MQTT_CLIENT_ID env if args not set")
-	flag.IntVar(mqttQos, "mqtt-qos", *mqttQos, "Qos to pusblish message, use MQTT_QOS env if arg not set")
-	flag.BoolVar(mqttRetain, "mqtt-retain", *mqttRetain, "Retain mqtt message, if not set, true if MQTT_RETAIN env variable is set")
+	flagSet.StringVar(mqttBroker, "mqtt-broker", *mqttBroker, "Broker Uri, use MQTT_BROKER env if arg not set")
+	flagSet.StringVar(username, "mqtt-username", os.Getenv("MQTT_USERNAME"), "Broker Username, use MQTT_USERNAME env if arg not set")
+	flagSet.StringVar(password, "mqtt-password", os.Getenv("MQTT_PASSWORD"), "Broker Password, MQTT_PASSWORD env if args not set")
+	flagSet.StringVar(clientId, "mqtt-client-id", *clientId, "Mqtt client id, use MQTT_CLIENT_ID env if args not set")
+	flagSet.IntVar(mqttQos, "mqtt-qos", *mqttQos, "Qos to pusblish message, use MQTT_QOS env if arg not set")
+	flagSet.BoolVar(mqttRetain, "mqtt-retain", *mqttRetain, "Retain mqtt message, if not set, true if MQTT_RETAIN env variable is set")
 }
 
 func InitMqttFlags(defaultClientId string, mqttBroker, username, password, clientId *string, mqttQos *int, mqttRetain *bool) {
