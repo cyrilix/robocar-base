@@ -47,11 +47,13 @@ github.com/docker/go-connections/tlsconfig
 # github.com/docker/go-units v0.3.3
 github.com/docker/go-units
 # github.com/eclipse/paho.mqtt.golang v1.2.0
+## explicit
 github.com/eclipse/paho.mqtt.golang
 github.com/eclipse/paho.mqtt.golang/packets
 # github.com/gogo/protobuf v1.2.0
 github.com/gogo/protobuf/proto
 # github.com/golang/protobuf v1.3.4
+## explicit
 github.com/golang/protobuf/proto
 github.com/golang/protobuf/ptypes
 github.com/golang/protobuf/ptypes/any
@@ -72,8 +74,10 @@ github.com/pkg/errors
 # github.com/satori/go.uuid v1.2.0
 github.com/satori/go.uuid
 # github.com/sirupsen/logrus v1.4.2
+## explicit
 github.com/sirupsen/logrus
 # github.com/testcontainers/testcontainers-go v0.3.0
+## explicit
 github.com/testcontainers/testcontainers-go
 github.com/testcontainers/testcontainers-go/wait
 # golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
