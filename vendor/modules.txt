@@ -131,7 +131,7 @@ google.golang.org/genproto/googleapis/rpc/status
 ## explicit
 google.golang.org/grpc/codes
 google.golang.org/grpc/status
-# google.golang.org/protobuf v1.26.0
+# google.golang.org/protobuf v1.27.1
 ## explicit; go 1.9
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
