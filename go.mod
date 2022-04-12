@@ -1,11 +1,11 @@
 module github.com/cyrilix/robocar-base
 
-go 1.17
+go 1.18
 
 require (
 	github.com/eclipse/paho.mqtt.golang v1.3.5
 	github.com/testcontainers/testcontainers-go v0.9.0
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.21.0
 	google.golang.org/protobuf v1.27.1
 )
 
